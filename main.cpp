@@ -62,6 +62,166 @@ void baru();
 void simpan();
 void penjualan();
 void struk(string namaBarang[100], int hargaBarang[100], int total, int banyakBarangDalamKeranjang, int bayar, int itemKeranjang);
+void untung();
+void sortir();
+void namaBarang();
+void namaPembeli();
+void namaSupplier();
+void tanggalTransaksi();
+
+void namaBarang() {
+    // banyak data
+    int banyakdata = 0;
+    int i = 0;
+    while(dataBarang.barang[i] != "") {
+        banyakdata++;
+        i++;
+    }
+
+    string barang[banyakdata];
+    int harga[banyakdata];
+    string supplier[banyakdata];
+
+    for(int i=0; i<banyakdata; i++) {
+        barang[i] = dataBarang.barang[i];
+        harga[i] = dataBarang.harga_jual[i];
+        supplier[i] = dataBarang.supplier[i];
+    }
+
+    //bubble
+
+    for(int i=0; i<banyakdata - 1; i++) {
+        for(int j=i+1; j<banyakdata; j++) {
+            if(barang[i] > barang[j]) {
+                string tampung;
+
+                tampung = barang[i];
+                barang[i] = barang[j];
+                barang[j] = tampung;
+            }
+        }
+    }
+
+    for(int i=0; i<banyakdata; i++) {
+        cout << "[" << (i+1) << "]. " << barang[i] << endl;
+        cout << "    " << "Harga   : Rp. " << harga[i] << endl;
+        cout << "    " << "Supplier: " << supplier[i] << endl;
+    }
+
+    cout << endl;
+
+    cout << "Anda Ingin Ke Menu [y/n] : ";
+    char m;
+    cin >> m;
+
+    if(m == 'y') {
+        system("clear");
+        menu();
+    } else {
+        system("clear");
+        exit();
+    }
+}
+
+void namaSupplier() {
+    // banyak data
+    int banyakdata = 0;
+    int i = 0;
+    while(dataBarang.barang[i] != "") {
+        banyakdata++;
+        i++;
+    }
+
+    string barang[banyakdata];
+    int harga[banyakdata];
+    string supplier[banyakdata];
+
+    for(int i=0; i<banyakdata; i++) {
+        barang[i] = dataBarang.barang[i];
+        harga[i] = dataBarang.harga_jual[i];
+        supplier[i] = dataBarang.supplier[i];
+    }
+
+    //bubble
+
+    for(int i=0; i<banyakdata - 1; i++) {
+        for(int j=i+1; j<banyakdata; j++) {
+            if(supplier[i] > supplier[j]) {
+                string tampung;
+
+                tampung = supplier[i];
+                supplier[i] = supplier[j];
+                supplier[j] = tampung;
+            }
+        }
+    }
+
+    for(int i=0; i<banyakdata; i++) {
+        cout << "[" << (i+1) << "]. " << barang[i] << endl;
+        cout << "    " << "Harga   : Rp. " << harga[i] << endl;
+        cout << "    " << "Supplier: " << supplier[i] << endl;
+    }
+
+    cout << endl;
+
+    cout << "Anda Ingin Ke Menu [y/n] : ";
+    char m;
+    cin >> m;
+
+    if(m == 'y') {
+        system("clear");
+        menu();
+    } else {
+        system("clear");
+        exit();
+    }
+}
+
+void sortir() {
+    awal:
+  
+    system("clear");
+    cout << "================================SORTIR===================================";
+    cout << endl << endl << endl;
+
+    cout << " [1]. Berdasarkan Nama Barang   ||   [3]. Berdasarkan Nama Supplier";
+    cout << endl;
+    cout << " [2]. Berdasarkan Nama Pembeli  ||   [4]. Berdasarkan Tanggal Transaksi";
+    cout << endl;
+    cout << endl;
+
+    int pil;
+
+    cout << "Pilih : ";
+    cin >> pil;
+
+    switch(pil) {
+        case 1:
+        namaBarang();
+        break;
+
+        case 2:
+        //namaPembeli();
+        break;
+
+        case 3:
+        namaSupplier();
+        break;
+
+        case 4:
+        //tanggalTransaksi();
+        break;
+
+        default:
+        cout << "Salah Input !" << endl;
+    }
+}
+
+void untung() {
+    for(int i=0; i<12; i++) {
+        cout << keuntungan.untung[i] << endl;
+    }
+}
 
 // penjualan
 
@@ -208,11 +368,7 @@ void penjualan() {
             tm *ltm = localtime(&now);
             int bulan = ltm->tm_mon;
 
-            for(int i=0; i<12; i++) {
-                if(bulan = i) {
-                    keuntungan.untung[i] = untung;
-                }
-            }
+            keuntungan.untung[bulan] += untung;
 
             //tulis data keuntungan ke db_untung.txt
             ofstream write6;
@@ -261,7 +417,8 @@ void penjualan() {
 }
 
 void struk(string namaBarang[100], int hargaBarang[100], int total, int banyakBarangDalamKeranjang, int bayar, int itemKeranjang) {
-	system("clear");
+	
+    system("clear");
     cout << "                        RETAIL";
 
     cout << endl;
@@ -850,7 +1007,7 @@ void menu() {
 
         case 4:
         system("clear");
-        //sortirdata();
+        sortir();
         break;
 
 
@@ -861,6 +1018,10 @@ void menu() {
         
         case 6:
         exit();
+        break;
+
+        case 7:
+        untung();
         break;
 
         default:
