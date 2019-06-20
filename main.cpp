@@ -22,6 +22,10 @@ struct keuntungan {
     long untung[12];
 }keuntungan;
 
+struct pembeli {
+    string pbl[10000];
+}pembeli;
+
 //untuk getch()
 /* reads from keypress, doesn't echo */
 int getch(void)
@@ -68,6 +72,119 @@ void namaBarang();
 void namaPembeli();
 void namaSupplier();
 void tanggalTransaksi();
+void caridata();
+
+
+
+void caridata() {
+	system("clear");
+    cout << "============================================================" << endl;
+    cout << "                        CARI DATA";
+    cout << endl;
+    cout << endl;
+
+    string kode;
+
+    cout << "Masukkan kode   : ";
+    cin >> kode;
+
+    cout << "============================================================" << endl;
+    cout << endl;
+    cout << endl;
+
+    //jumlah;;
+    int jumlah = 0;
+    while(dataBarang.barang[jumlah] != "") {
+        jumlah++;
+    }
+
+    bool temu = true;
+
+    for(int i=0; i<jumlah; i++) {
+        if(dataBarang.kode[i] == kode) {
+        cout << "                     DATA DITEMUKAN";
+        cout << endl;
+        cout << endl;
+
+        cout << dataBarang.kode[i] << "      " << dataBarang.barang[i] << "       " << "Rp. " << dataBarang.harga_jual[i];
+        cout << endl;
+        goto lanjut;
+        }
+        else {
+        temu = false;
+        }
+    }
+
+    if(temu == false) {
+        cout << "                  DATA TIDAK DITEMUKAN";
+        cout << endl;
+    }
+
+        lanjut:
+        cout << endl;
+
+        char a;
+        cout << "Ingin kembali ke menu [y/n] : ";
+        cin >> a;
+        if(a == 'y' | a == 'Y') {
+        menu();
+        }
+}
+
+void namaPembeli() {
+    awal:
+    system("clear");
+    cout << "===============================NAMA PEMBELI===================================" << endl;
+    cout << endl;
+    cout << endl;
+    
+    // banyak data
+    int banyakdata = 0;
+    int i = 0;
+    while(pembeli.pbl[i] != "") {
+        banyakdata++;
+        i++;
+    }
+
+    string *pbl = new string[banyakdata];
+
+    for(int i=0; i<banyakdata; i++) {
+        pbl[i] = pembeli.pbl[i];
+    }
+
+
+    //bubble sort
+    for(int i=0; i<banyakdata-1; i++) {
+        for(int j=i+1; j<banyakdata; j++) {
+            if(pbl[i] > pbl[j]) {
+                string tampung;
+
+                tampung = pbl[i];
+                pbl[i] = pbl[j];
+                pbl[j] = tampung;
+            }
+        }
+    }
+
+    for(int i=0; i<banyakdata; i++) {
+        cout << "[" << i+1 << "]. " << pbl[i] << endl;
+    }
+
+    cout << endl << endl;
+
+    cout << "Anda Ingin Ke Menu [y/n] : ";
+    char m;
+    cin >> m;
+
+    if(m == 'y') {
+        system("clear");
+        menu();
+    } else {
+        system("clear");
+        exit();
+    }
+    
+}
 
 void namaBarang() {
     // banyak data
@@ -201,7 +318,7 @@ void sortir() {
         break;
 
         case 2:
-        //namaPembeli();
+        namaPembeli();
         break;
 
         case 3:
@@ -838,6 +955,7 @@ void loadData() {
     ifstream load4;
     ifstream load5;
     ifstream load6;
+    ifstream load7;
 
     //barang
     load1.open("db_barang.txt", ios::app);
@@ -926,6 +1044,17 @@ void loadData() {
         i++;
     }
     load6.close();
+
+    // pembeli
+    load7.open("db_pembeli.txt", ios::app);
+    i=0;
+    string tampung;
+
+    while(!load7.eof()) {
+        getline(load7, pembeli.pbl[i]);
+        i++;
+    }
+    load7.close();
 }
 
 void welcome() {
@@ -1001,7 +1130,7 @@ void menu() {
 
         case 3:
         system("clear");
-        //caridata();
+        caridata();
         break;
 
 
