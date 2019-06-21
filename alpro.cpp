@@ -1,19 +1,17 @@
 #include <iostream>
+#include "lib.h"
 using namespace std;
 
+struct data {
+  int a;
+};
+
 main() {
-  int n;
+  hello();
 
-  cout << "N : "; cin >> n;
+  data data1;
 
-  int *angka = new int[n];
+  cout << &data1 << endl;
 
-  for(int i=0; i<n; i++) {
-    cout << "Data : "; cin >> angka[i];
-  }
-
-  for(int i=0; i<n; i++) {
-    cout << angka[i] << endl;
-  }
-
+  cekdata(&data1);
 }
